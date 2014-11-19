@@ -241,7 +241,7 @@ public class ServiceImpl implements Service {
         }
     }
 
-    public static PatchImpl doLoad(ServiceImpl service, InputStream is) throws IOException {
+    public static PatchImpl doLoad(Service service, InputStream is) throws IOException {
         return new PatchImpl(service, PatchData.load(is));
     }
 
@@ -296,7 +296,7 @@ public class ServiceImpl implements Service {
         }
     }
 
-    void rollback(Patch patch, boolean force) throws PatchException {
+    public void rollback(Patch patch, boolean force) throws PatchException {
         Result result = patch.getResult();
         if (result == null) {
             throw new PatchException("Patch " + patch.getId() + " is not installed");
@@ -348,11 +348,11 @@ public class ServiceImpl implements Service {
         file.delete();
     }
 
-    Result install(Patch patch, boolean simulate) {
+    public Result install(Patch patch, boolean simulate) {
         return install(patch, simulate, true);
     }
 
-    Result install(Patch patch, boolean simulate, boolean synchronous) {
+    public Result install(Patch patch, boolean simulate, boolean synchronous) {
         Map<String, Result> results = install(Collections.singleton(patch), simulate, synchronous);
         return results.get(patch.getId());
     }
